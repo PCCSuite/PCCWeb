@@ -1,0 +1,34 @@
+{
+	auto_https off
+}
+
+:80 {
+	root * /var/www/html
+	handle /wordpress {
+		php_fastcgi wordpress:9000
+	}
+	handle /wordpress/* {
+		php_fastcgi wordpress:9000
+	}
+	handle /mediawiki {
+		reverse_proxy mediawiki:80
+	}
+	handle /mediawiki/* {
+		reverse_proxy mediawiki:80
+	}
+	handle /docs {
+		reverse_proxy docs:80
+	}
+	handle /docs/* {
+		reverse_proxy docs:80
+	}
+	handle /inventree {
+		reverse_proxy inventree:80
+	}
+	handle /inventree/* {
+		reverse_proxy inventree:80
+	}
+	file_server {
+		hide hidden
+	}
+}

@@ -1,0 +1,67 @@
+version: '3'
+services:
+  wordpress_db:
+    image: mariadb:latest
+    volumes:
+      - type: bind
+        source: ${PCC_WEB_DATA}/wordpress_db
+        target: /var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: ${PCC_WORDPRESS_DB_PASSWORD}
+    restart: unless-stopped
+    pull_policy: always
+  wordpress:
+    depends_on:
+      - wordpress_db
+    image: ghcr.io/pccsuite/pccweb/wordpress:latest
+    volumes:
+      - type: bind
+        source: ${PCC_WEB_DATA}/html
+        target: /var/www/html
+    restart: unless-stopped
+    pull_policy: always
+  mediawiki_db:
+    image: mariadb:latest
+    volumes:
+      - type: bind
+        source: ${PCC_WEB_DATA}/mediawiki_db
+        target: /var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: mediawiki
+      MYSQL_USER: mediawiki
+      MYSQL_PASSWORD: ${PCC_MEDIAWIKI_DB_PASSWORD}
+    restart: unless-stopped
+    pull_policy: always
+  mediawiki:
+    depends_on:
+      - mediawiki_db
+    image: ghcr.io/pccsuite/pccweb/mediawiki:latest
+    volumes:
+      - type: bind
+        source: ${PCC_WEB_DATA}/html/mediawiki/images
+        target: /var/www/html/mediawiki/images
+      - type: bind
+        source: ${PCC_WEB_DATA}/html/mediawiki/LocalSettings.php
+        target: /var/www/html/mediawiki/LocalSettings.php
+    ports:
+      - "8002:80"
+    restart: unless-stopped
+    pull_policy: always
+  caddy:
+    image: caddy:alpine
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - type: bind
+        source: caddy/Caddyfile
+        target: /etc/caddy/Caddyfile
+      - type: bind
+        source: ${PCC_WEB_DATA}/html
+        target: /var/www/html
+    restart: unless-stopped
+    pull_policy: always
