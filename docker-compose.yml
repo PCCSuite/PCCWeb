@@ -19,8 +19,8 @@ services:
     image: ghcr.io/pccsuite/pccweb/wordpress:latest
     volumes:
       - type: bind
-        source: ${PCC_WEB_DATA}/html
-        target: /var/www/html
+        source: ${PCC_WEB_DATA}/html/wordpress
+        target: /var/www/html/wordpress
     restart: unless-stopped
     pull_policy: always
   mediawiki_db:
