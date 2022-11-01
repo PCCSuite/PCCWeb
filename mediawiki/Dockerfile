@@ -14,6 +14,7 @@ RUN cd /var/www/html/mediawiki/extensions && \
     git clone --single-branch --branch=REL1_38 --depth=1 https://github.com/wikimedia/mediawiki-extensions-PluggableAuth.git PluggableAuth && \
     git clone --single-branch --branch=REL1_38 --depth=1 https://github.com/wikimedia/mediawiki-extensions-OpenIDConnect.git OpenIDConnect
 
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
 RUN cd /var/www/html/mediawiki && \
-    curl -sS https://getcomposer.org/installer | php && \
-    php composer.phar update
+    composer update
