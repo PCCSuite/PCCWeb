@@ -21,6 +21,11 @@ services:
       - type: bind
         source: ${PCC_WEB_DATA}/html/wordpress
         target: /var/www/html/wordpress
+    environment:
+      WORDPRESS_DB_HOST: wordpress_db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: ${PCC_WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
     restart: unless-stopped
     pull_policy: always
   mediawiki_db:
