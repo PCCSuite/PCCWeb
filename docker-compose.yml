@@ -21,6 +21,8 @@ services:
       - type: bind
         source: ${PCC_WEB_DATA}/html/wordpress
         target: /var/www/html/wordpress
+    ports:
+      - "8001:80"
     environment:
       WORDPRESS_DB_HOST: wordpress_db
       WORDPRESS_DB_USER: wordpress

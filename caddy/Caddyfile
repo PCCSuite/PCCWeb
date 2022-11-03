@@ -5,10 +5,10 @@
 :80 {
 	root * /var/www/html
 	handle /wordpress {
-		php_fastcgi wordpress:9000
+		reverse_proxy wordpress:80
 	}
 	handle /wordpress/* {
-		php_fastcgi wordpress:9000
+		reverse_proxy wordpress:80
 	}
 	handle /mediawiki {
 		reverse_proxy mediawiki:80
