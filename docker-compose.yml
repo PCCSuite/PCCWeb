@@ -32,8 +32,10 @@ services:
     pull_policy: always
   wordpress_cli:
     depends_on:
-      - wordpress
+      - wordpress_db
     image: wordpress:cli
+    stdin_open: true
+    tty: true
     volumes:
       - type: bind
         source: ${PCC_WEB_DATA}/html/wordpress
