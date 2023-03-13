@@ -77,6 +77,16 @@ services:
       - "8002:80"
     restart: unless-stopped
     pull_policy: always
+  attend:
+    image: ghcr.io/pccsuite/pccattendancechecker-next
+    ports:
+      - "8008:3000"
+    volumes:
+      - type: bind
+        source: ${PCC_WEB_DATA}/attend_db.sqlite
+        target: /data/attend.sqlite
+    restart: unless-stopped
+    pull_policy: always
   caddy:
     image: caddy:alpine
     ports:

@@ -28,6 +28,12 @@
 	handle /inventree/* {
 		reverse_proxy inventree:80
 	}
+	handle /attend {
+		reverse_proxy attend:3000
+	}
+	handle /attend/* {
+		reverse_proxy attend:3000
+	}
 	file_server {
 		hide hidden
 	}
