@@ -81,7 +81,6 @@ services:
     image: caddy:alpine
     ports:
       - "80:80"
-    restart: always
     volumes:
       - type: bind
         source: caddy/Caddyfile
