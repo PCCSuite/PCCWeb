@@ -79,7 +79,6 @@ services:
     pull_policy: always
   attend:
     image: ghcr.io/pccsuite/pccattendancechecker-next
-    command: npx ts-node server/server.ts --base-path /attend
     ports:
       - "8008:3000"
     volumes:
